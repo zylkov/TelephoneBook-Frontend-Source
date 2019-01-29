@@ -10,18 +10,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'Главная',
       component: Home
     },
     {
       path: '/abonents',
-      name: 'abonents',
+      name: 'Абоненты',
       component: Abonents
       
     },
     {
       path:'/structurs',
-      name:'structurs',
+      name:'Службы',
       component:Structurs
     }
   ]
