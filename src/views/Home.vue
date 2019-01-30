@@ -27,14 +27,14 @@
 
 <script>
 // @ is an alias to /src
-
+import router from '@/router.js'
 
 export default {
   name: 'home',
-  data(){
-    return{
-      msg:"Привет мир"
-    }
+  methods:{
+        goToPage(name){
+            router.push({name})
+        }
   }
 }
 </script>

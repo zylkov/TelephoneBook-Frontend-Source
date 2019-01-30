@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app id="inspire">
-      <Header/>
+      <Header v-bind:btnback="btnback"/>
       <router-view/>
     </v-app>
   </div>
@@ -13,6 +13,16 @@ export default {
   name:"app",
   components:{
     Header
+  },
+  data(){
+    return{
+      btnback:true
+    }
+  },
+  watch: {
+    '$route' (to) {
+      to.name === "Абонент" ? this.btnback=true : this.btnback=false
+    }
   }
 }
 </script>
