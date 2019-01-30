@@ -27,7 +27,8 @@ export default new Router({
     },
     {
       path:'/abonents/:id',
-      component:Abonent
+      name:'Абонент',
+      component: Abonent
     }
   ]
 })
