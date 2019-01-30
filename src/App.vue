@@ -21,7 +21,7 @@ export default {
   },
   watch: {
     '$route' (to) {
-      to.name === "Абонент" ? this.btnback=true : this.btnback=false
+      to.name === "Абонент" || to.name === "Служба"  ? this.btnback=true : this.btnback=false
     }
   }
 }
