@@ -1,6 +1,9 @@
 <template>
    <div class="abonents">
-       <Telephones v-bind:telephones="telephones"/>
+       <Telephones 
+       v-bind:telephones="telephones"
+       v-bind:iconName="iconName"
+       v-bind:namePath="namePath" />
    </div> 
 </template>
 
@@ -17,36 +20,31 @@ export default {
             telephones:[
                 {
                     id:"1",
-                    surname:"Зыльков",
-                    name:"Даниил",
+                    name:"Зыльков Даниил Алексеевич",
                     middle_name:"Алексеевич",
                     place:"Рощино"
                 },
                 { divider: true, inset: true },
                 {
                     id:"2",
-                    surname:"Гриньков",
-                    name:"Григорий",
-                    middle_name:"вцвцвывы",
+                    name:"Гриньков Григорий вцвцвывы",
                     place:"Санкт-Петербург" 
                 },
                 { divider: true, inset: true },
                 {
                     id:"3",
-                    surname:"Камчатный",
-                    name:"Андрей",
-                    middle_name:"Демонович",
+                    name:"Камчатный Андрей Демонович",
                     place:"Санкт-Петербург" 
                 },
                 { divider: true, inset: true },
                 {
                     id:"4",
-                    surname:"Первушин",
-                    name:"Алексей",
-                    middle_name:"Антонович",
+                    name:"Первушин Алексей Антонович",
                     place:"Санкт-Петербург" 
                 }
-            ]
+            ],
+            iconName:"account_circle",
+            namePath:"Абонент"
         }
     }
 }

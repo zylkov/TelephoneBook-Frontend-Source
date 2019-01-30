@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Abonents from './views/Abonents.vue'
 import Abonent from './views/Abonent.vue'
 import Structurs from './views/Structurs.vue'
+import Structur from './views/Structur.vue'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path:'/abonents/:id',
       name:'Абонент',
       component: Abonent
-    }
+    },
+    {
+      path:'/structurs/:id',
+      name:'Служба',
+      component: Structur
+    },
   ]
 })
