@@ -37,7 +37,7 @@ export default {
                     place:"Санкт-Петербург" 
                 }
             ],
-            iconName:"account_circle",
+            iconName:"business",
             namePath:"Служба"
         }
     }
