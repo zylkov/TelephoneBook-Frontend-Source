@@ -16,6 +16,7 @@
                         v-else
                         :key="item.id"
                         avatar
+                        @click="goToPageTelephone(item.id)"
                         
                     >
                         <v-list-tile-avatar>
@@ -35,9 +36,16 @@
 </template>
 
 <script>
+import router from '../router'
+
 export default {
     name:"Telephones",
-    props:["telephones"]
+    props:["telephones"],
+    methods:{
+        goToPageTelephone(id){
+            router.push({name:"Абонент",params: { id }})
+        }
+    }
 }
 </script>
 
