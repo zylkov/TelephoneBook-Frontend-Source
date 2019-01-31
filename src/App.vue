@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app id="inspire">
-      <Header v-on:open-nav="openNav" v-bind:btnback="btnback"/>
+      <Header v-on:open-nav="openNav" v-on:click-add="clickAdd" v-bind:btnAdd="btnAdd" v-bind:tooltipAdd="tooltipAdd"/>
       <Navigator v-on:close-nav="closeNav" v-bind:nav="nav" v-bind:drawer="drawer"/>
       <router-view/>
     </v-app>
@@ -11,6 +11,9 @@
 <script>
 import Header from './components/layout/Header'
 import Navigator from './components/layout/Navigator'
+
+import router from '@/router'
+
 export default {
   name:"app",
   components:{
@@ -19,8 +22,10 @@ export default {
   },
   data(){
     return{
-      btnback:true,
       drawer:null,
+      btnAdd:false,
+      admin:true,
+      tooltipAdd:"Добавить",
       nav:[
         {
           title:"Главная",
@@ -42,7 +47,26 @@ export default {
   },
   watch: {
     '$route' (to) {
-      to.name === "Абонент" || to.name === "Служба"  ? this.btnback=true : this.btnback=false
+      if(this.admin){
+        if(to.name === "Абоненты"){
+          this.btnAdd=true
+          this.tooltipAdd="Добавить абонента"
+        }
+        else{
+          this.btnAdd=false
+        }
+      }
+    }
+  },
+  created:function(){
+    if(this.admin){
+        if(this.$route.name === "Абоненты"){
+          this.btnAdd=true
+          this.tooltipAdd="Добавить абонента"
+        }
+        else{
+          this.btnAdd=false
+        }
     }
   },
   methods:{
@@ -51,6 +75,11 @@ export default {
     },
     closeNav(val){
       this.drawer = val
+    },
+    clickAdd(){
+      if(this.$route.name==="Абоненты"){
+        router.push({name:"Новый абонент"})
+      }
     }
   }
 }
