@@ -1,88 +1,160 @@
 <template>
     <div class="AddAbonent">
-        <v-layout align-center justify-center>
-            <v-card class="list">
-                <v-list two-line>
-                    <v-list-tile class="item-list">
-                        <v-list-tile-content>
-                            <v-list-tile-title>Фамилия</v-list-tile-title>
-                            <v-list-tile-sub-title>
-                                <v-text-field
-                                placeholder="Зыльков"
-                                required/>
-                            </v-list-tile-sub-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                    <v-divider/>
-                    <v-list-tile class="item-list">
-                        <v-list-tile-content>
-                            <v-list-tile-title>Имя</v-list-tile-title>
-                            <v-list-tile-sub-title>
-                                <v-text-field
-                                placeholder="Даниил"
-                                required/>
-                            </v-list-tile-sub-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                    <v-divider/>
-                    <v-list-tile class="item-list">
-                        <v-list-tile-content>
-                            <v-list-tile-title>Отчество</v-list-tile-title>
-                            <v-list-tile-sub-title>
-                                <v-text-field
-                                placeholder="Алексеевич"
-                                required/>
-                            </v-list-tile-sub-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                    <v-divider/>
-                    <v-list-tile class="item-list">
-                        <v-list-tile-content>
-                            <v-list-tile-title>Место прописки</v-list-tile-title>
-                            <v-list-tile-sub-title>
-                                <v-text-field
-                                placeholder="Рощино"
-                                required
-                                />
-                            </v-list-tile-sub-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                    <v-divider/>
-                    <v-list-tile class="item-list">
-                        <v-list-tile-content>
-                            <v-list-tile-title>Адресс</v-list-tile-title>
-                            <v-list-tile-sub-title>
-                                <v-text-field
-                                placeholder="Проезд Строителей; дом 123; кв 21"
-                                />
-                                
-                            </v-list-tile-sub-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                    <v-divider/>
-                    <v-list-tile class="item-list">
-                        <v-list-tile-content>
-                            <v-list-tile-title>Номер телефона</v-list-tile-title>
-                            <v-list-tile-sub-title>
-                                <v-text-field required/>
-                            </v-list-tile-sub-title>
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </v-list>
+        <v-layout justify-center>
+            <v-flex xs12 sm10 md8 lg6>
+            <v-card ref="form" class="card-form">
+                <v-card-text>
+                
+                <v-text-field
+                    class="item-list"
+                    ref="surname"
+                    v-model="surname"
+                    :rules="[() => !!surname || 'Это поле должо быть заполенно']"
+                    
+                    label="Фамилия"
+                    placeholder="Зыльков"
+                    required
+                ></v-text-field>
+                <v-text-field
+                    class="item-list"
+                    ref="name"
+                    v-model="name"
+                    :rules="[() => !!name || 'Это поле должо быть заполенно ']"
+                    
+                    label="Имя"
+                    placeholder="Даниил"
+                    required
+                ></v-text-field>
+                <v-text-field
+                    class="item-list"
+                    ref="middle_name"
+                    v-model="middle_name"
+                    :rules="[() => !!middle_name || 'Это поле должо быть заполенно']"
+                    
+                    label="Отчество"
+                    placeholder="Алексеевич"
+                    required
+                ></v-text-field>
+               
+                <v-text-field
+                    class="item-list"
+                    ref="place"
+                    v-model="place"
+                    :rules="[() => !!place || 'Это поле должо быть заполенно']"
+                    
+                    label="Место прописки"
+                    placeholder="Рощино"
+                    required
+                ></v-text-field>
+                
+                <v-text-field
+                    class="item-list"
+                    ref="address"
+                    v-model="address"
+                    
+                    label="Адресс"
+                    placeholder="ул. Строителей дом 123"
+                    required
+                ></v-text-field>
+                
+                <v-text-field
+                    class="item-list"
+                    ref="number_telephone"
+                    v-model="number_telephone"
+                    :rules="[() => !!number_telephone || 'Это поле должо быть заполенно']"
+                    
+                    label="Телефон"
+                    placeholder="12332145"
+                    required
+                ></v-text-field>
+                
+                </v-card-text>
+                <v-divider class="mt-5"></v-divider>
+                <v-card-actions>
+                <v-btn @click="cancel()" flat>Отменить</v-btn>
+                <v-spacer></v-spacer>
+                <v-slide-x-reverse-transition>
+                    <v-tooltip
+                    v-if="formHasErrors"
+                    left
+                    >
+                    <v-btn
+                        slot="activator"
+                        icon
+                        class="my-0"
+                        @click="resetForm"
+                    >
+                        <v-icon>refresh</v-icon>
+                    </v-btn>
+                    <span>Очистить форму</span>
+                    </v-tooltip>
+                </v-slide-x-reverse-transition>
+                <v-btn color="success" flat @click="submit">Добавить</v-btn>
+                </v-card-actions>
             </v-card>
-       </v-layout>
+            </v-flex>
+        </v-layout>
     </div>
 </template>
 
 <script>
+import router from '@/router'
+
 export default {
-    name:"AddAbonent"
+    name:"AddAbonent",
+    data(){
+        return{
+            surname:null,
+            name:null,
+            middle_name:null,
+            place:null,
+            address:null,
+            number_telephone:null,
+            formHasErrors: false
+        }
+    },
+    computed:{
+        form(){
+            return{
+                surname:this.surname,
+                name:this.name,
+                middle_name:this.middle_name,
+                place:this.place,
+                address:this.address,
+                number_telephone:this.number_telephone
+            }
+        }
+    },
+    methods:{
+        cancel(){
+            router.back()
+        },
+        resetForm () {
+        this.errorMessages = []
+        this.formHasErrors = false
+
+        Object.keys(this.form).forEach(f => {
+          this.$refs[f].reset()
+        })
+        },
+        submit () {
+            this.formHasErrors = false
+
+            Object.keys(this.form).forEach(f => {
+            if (!this.form[f]) this.formHasErrors = true
+
+            this.$refs[f].validate(true)
+            })
+        }
+    }
 }
 </script>
 
 <style>
 .item-list{
-    padding-top:10px;
-    padding-bottom: 10px; 
+    margin-bottom: 14px; 
+}
+.card-form{
+    margin-top: 10px;
 }
 </style>
