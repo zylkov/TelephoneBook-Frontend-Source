@@ -124,7 +124,7 @@ export default {
             }]
         },
         deletetelephone(delid){
-            console.log('Удалять',delid)
+            
             this.telephones=this.telephones.filter((el,index)=>index!==delid)
         },
         cancel(){
