@@ -52,6 +52,10 @@ export default {
           this.btnAdd=true
           this.tooltipAdd="Добавить абонента"
         }
+        else if(to.name ==="Службы"){
+          this.btnAdd=true
+          this.tooltipAdd="Добавить службу"
+        }
         else{
           this.btnAdd=false
         }
@@ -63,6 +67,10 @@ export default {
         if(this.$route.name === "Абоненты"){
           this.btnAdd=true
           this.tooltipAdd="Добавить абонента"
+        }
+        else if(to.name ==="Службы"){
+          this.btnAdd=true
+          this.tooltipAdd="Добавить службу"
         }
         else{
           this.btnAdd=false
@@ -79,6 +87,9 @@ export default {
     clickAdd(){
       if(this.$route.name==="Абоненты"){
         router.push({name:"Новый абонент"})
+      }
+      else if(this.$route.name==="Службы"){
+        router.push({name:"Новая служба"})
       }
     }
   }

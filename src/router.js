@@ -6,6 +6,7 @@ import Abonent from './views/Abonent.vue'
 import Structurs from './views/Structurs.vue'
 import Structur from './views/Structur.vue'
 import AddAbonent from './views/AddAbonent.vue'
+import AddStructur from './views/AddStructur.vue'
 
 Vue.use(Router)
 
@@ -32,6 +33,11 @@ export default new Router({
       path:'/structurs',
       name:'Службы',
       component:Structurs
+    },
+    {
+      path:'/structurs/add',
+      name:'Новая служба',
+      component:AddStructur
     },
     {
       path:'/abonent/:id',
