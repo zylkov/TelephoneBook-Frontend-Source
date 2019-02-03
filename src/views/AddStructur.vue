@@ -1,4 +1,5 @@
 <template>
+<div class="AddStructur">
     <v-layout justify-center>
             <v-flex xs12 sm10 md8 lg6>
             <v-card ref="form" class="card-form">
@@ -52,6 +53,7 @@
             </v-card>
             </v-flex>
         </v-layout>
+</div>
 </template>
 
 <script>
