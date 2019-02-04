@@ -9,6 +9,7 @@
 
 <script>
 import Telephones from '../components/Telephones'
+import axios from 'axios'
 
 export default {
     name:"abonents",
@@ -17,7 +18,7 @@ export default {
     },
     data(){
         return{
-            telephones:[
+            testtelephones:[
                 {
                     id:"1",
                     name:"Зыльков Даниил Алексеевич",
@@ -43,9 +44,23 @@ export default {
                     place:"Санкт-Петербург" 
                 }
             ],
+            telephones:[],
             iconName:"account_circle",
             namePath:"Абонент"
         }
+    },
+    created(){
+        axios.get('http://c911161l.beget.tech/practic2/telephones.api')
+            .then(res=>{
+                this.telephones = res.data.output.map(element => {
+                  return{
+                      id:element.id,
+                      name: [element.surname, element.name, element.middle_name].join(" "),
+                      place: element.place
+                  }
+                }) 
+            })
+            .catch(err=>console.log(err))
     }
 }
 </script>
