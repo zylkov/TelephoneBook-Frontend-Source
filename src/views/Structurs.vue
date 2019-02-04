@@ -9,6 +9,7 @@
 
 <script>
 import Telephones from '../components/Telephones'
+import axios from 'axios'
 
 export default {
     name:"structurs",
@@ -17,7 +18,7 @@ export default {
     },
     data(){
         return{
-            telephones:[
+            testtelephones:[
                 {
                     id:"1",
                     name:"Полиция",
@@ -37,9 +38,17 @@ export default {
                     place:"Санкт-Петербург" 
                 }
             ],
+            telephones:[],
             iconName:"business",
             namePath:"Служба"
         }
+    },
+    created(){
+        axios.get('http://c911161l.beget.tech/practic2/structurs.api')
+            .then(res=>{
+                this.telephones = res.data.output
+            })
+            .catch(err=>console.log(err))
     }
 }
 </script>

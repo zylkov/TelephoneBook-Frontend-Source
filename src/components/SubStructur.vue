@@ -23,17 +23,17 @@
                                     <v-list-tile-title>Тип</v-list-tile-title>
                                     <v-list-tile-sub-title>{{item.type}}</v-list-tile-sub-title>
                             </v-list-tile-content>
-                            <v-list-tile-content v-if="item.address">
+                            <v-list-tile-content v-if="item.adress">
                                     <v-list-tile-title>Адресс</v-list-tile-title>
-                                    <v-list-tile-sub-title>{{item.address}}</v-list-tile-sub-title>
+                                    <v-list-tile-sub-title>{{item.adress}}</v-list-tile-sub-title>
                             </v-list-tile-content>
                             <v-subheader class="subtitle">
                                 Контакные данные
                             </v-subheader>
-                            <span v-for="(telephone,index) in item.telephones" :key="index">
+                            <span v-for="(telephone,index) in item.number" :key="index">
                                 <v-list-tile-content>
-                                    <v-list-tile-title>{{telephone.type}}</v-list-tile-title>
-                                    <v-list-tile-sub-title>{{telephone.number}}</v-list-tile-sub-title>
+                                    <v-list-tile-title>{{getTypeNumber(telephone)}}</v-list-tile-title>
+                                    <v-list-tile-sub-title>{{telephone[getTypeNumber(telephone)]}}</v-list-tile-sub-title>
                                 </v-list-tile-content>
                             </span>
                         </v-list>
@@ -51,7 +51,12 @@ export default {
     name:"SubStructur",
     props:[
         "substructrs"
-    ]
+    ],
+    methods:{
+        getTypeNumber(obj){
+           return Object.keys(obj)[0]
+        }
+    }
 }
 </script>
 

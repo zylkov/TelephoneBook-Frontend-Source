@@ -8,6 +8,8 @@
 <script>
 import OfficalTelephone from '../components/OfficalTelephone'
 import SubStructur from '../components/SubStructur'
+import axios from 'axios'
+
 
 export default {
     name:"Structur",
@@ -19,13 +21,20 @@ export default {
         return{
             telephone:
             {
+                id:"",
+                name:"",
+                place:"",
+            },
+            substructrs:[],
+            testtelephone:
+            {
                 id:"1",
                 name:"Полиция",
                 place:"Рощино",
                 
                            
             },
-            substructrs:[
+            testsubstructrs:[
                     {
                         id:"1",
                         name:"Отдел 5",
@@ -59,6 +68,27 @@ export default {
                     }
                 ] 
         }
+    },
+    created(){
+        axios.get('http://c911161l.beget.tech/practic2/structur.api',{
+            params:{
+                id:this.$route.params.id
+            }
+        })
+            .then(res=>{
+                this.telephone = res.data.output
+            })
+            .catch(err=>console.log(err))
+        
+        axios.get('http://c911161l.beget.tech/practic2/substructurs.api',{
+            params:{
+                id:this.$route.params.id
+            }
+        })
+            .then(res=>{
+                this.substructrs = res.data.output
+            })
+            .catch(err=>console.log(err))
     }
 }
 </script>
