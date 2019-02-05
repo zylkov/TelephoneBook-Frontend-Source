@@ -15,14 +15,25 @@
                     placeholder="Полиция"
                     required
                 ></v-text-field>
+                <v-select
+                    v-model="place"
+                    ref="place"
+                    :items="places"
+                    item-text="name"
+                    item-value="id"
+                    label="Местоположение"
+                    return-object
+                    :rules="[v => !!v || 'Это поле должо быть заполенно']"
+                    required
+                ></v-select>
                 <v-text-field
                     class="item-list"
-                    ref="place"
-                    v-model="place"
-                    :rules="[() => !!place || 'Это поле должо быть заполенно ']"
+                    ref="adress"
+                    v-model="adress"
+                    :rules="[() => !!adress || 'Это поле должо быть заполенно ']"
                     
-                    label="Место нахождение"
-                    placeholder="Рощино"
+                    label="Адресс"
+                    placeholder="ул. Сизам, дом 12"
                     required
                 ></v-text-field>
                 
@@ -58,33 +69,51 @@
 
 <script>
 import router from '@/router'
+import axios from 'axios'
+
 
 export default {
     name:"AddStructur",
     data(){
         return{
             name:null,
-            place:null
+            testPlaces:[
+                {id:1, name:"Санк-Петербург"},
+                {id:2, name:"Рощино"},
+            ],
+            places:[],
+            place:null,
+            adress:null,
+            errorMessages:[],
+            formHasErrors:false
         }
     },
     computed:{
         form(){
             return{
                 name:this.name,
-                place:this.place
+                place:this.place,
+                adress:this.adress
             }
         }
+    },
+    created(){
+        axios.get('http://c911161l.beget.tech/practic2/places.api')
+            .then(res=>{
+                this.places = res.data.output
+            })
+            .catch(err=>console.log(err))
     },
     methods:{
         cancel(){
             router.back()
         },
         resetForm () {
-        this.errorMessages = []
-        this.formHasErrors = false
+            this.errorMessages = []
+            this.formHasErrors = false
 
-        Object.keys(this.form).forEach(f => {
-          this.$refs[f].reset()
+            Object.keys(this.form).forEach(f => {
+            this.$refs[f].reset()
         })
         },
         submit () {
@@ -95,6 +124,29 @@ export default {
 
             this.$refs[f].validate(true)
             })
+
+            if(!this.formHasErrors)
+                axios({
+                    method:"post",
+                    url:"http://c911161l.beget.tech/practic2/structurs.api",
+                    data:{
+                        id_place:this.place.id,
+                        name:this.name,
+                        adress:this.adress
+                    },
+                    transformRequest:function(data){
+                        return Object.keys(data)
+                                .map(function(key, index) {
+                                    return `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`
+                                })
+                                .join("&")
+                    }
+                })
+                .then(res=>{
+                    console.log("Sucse:",res.data)
+                    this.resetForm()
+                })
+                .catch(err=>console.log(err))
         }
     }
 }
