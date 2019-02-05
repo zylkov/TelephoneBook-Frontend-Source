@@ -36,16 +36,17 @@
                     required
                 ></v-text-field>
                
-                <v-text-field
-                    class="item-list"
-                    ref="place"
+                <v-select
                     v-model="place"
-                    :rules="[() => !!place || 'Это поле должо быть заполенно']"
-                    
+                    ref="place"
+                    :items="places"
+                    item-text="name"
+                    item-value="id"
                     label="Место прописки"
-                    placeholder="Рощино"
+                    return-object
+                    :rules="[v => !!v || 'Это поле должо быть заполенно']"
                     required
-                ></v-text-field>
+                ></v-select>
                 
                 <v-text-field
                     class="item-list"
@@ -99,18 +100,22 @@
 
 <script>
 import router from '@/router'
+import axios from 'axios'
+
 
 export default {
     name:"AddAbonent",
     data(){
         return{
+            places:[],
             surname:null,
             name:null,
             middle_name:null,
             place:null,
             address:null,
             number_telephone:null,
-            formHasErrors: false
+            errorMessages:[],
+            formHasErrors:false
         }
     },
     computed:{
@@ -124,6 +129,13 @@ export default {
                 number_telephone:this.number_telephone
             }
         }
+    },
+    created(){
+        axios.get('http://c911161l.beget.tech/practic2/places.api')
+            .then(res=>{
+                this.places = res.data.output
+            })
+            .catch(err=>console.log(err))
     },
     methods:{
         cancel(){
@@ -145,6 +157,32 @@ export default {
 
             this.$refs[f].validate(true)
             })
+
+            if(!this.formHasErrors)
+                axios({
+                    method:"post",
+                    url:"http://c911161l.beget.tech/practic2/telephones.api",
+                    data:{
+                        id_place:this.place.id,
+                        surname:this.surname,
+                        name:this.name,
+                        middle_name:this.middle_name,
+                        address:this.adress,
+                        number_telephone:this.number_telephone
+                    },
+                    transformRequest:function(data){
+                        return Object.keys(data)
+                                .map(function(key, index) {
+                                    return `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`
+                                })
+                                .join("&")
+                    }
+                })
+                .then(res=>{
+                    console.log("Sucse:",res.data)
+                    this.resetForm()
+                })
+                .catch(err=>console.log(err))
         }
     }
 }
