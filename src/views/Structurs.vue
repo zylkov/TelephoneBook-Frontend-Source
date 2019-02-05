@@ -1,5 +1,17 @@
 <template>
    <div class="structurs">
+       <v-layout align-center justify-center>
+          <div class="search">
+            <v-text-field
+                v-model="search"
+                outline
+                label="Поиск"
+                type="text"
+                prepend-icon="search"
+            >
+            </v-text-field>
+          </div>
+       </v-layout>
        <Telephones 
        v-bind:telephones="telephones"
        v-bind:iconName="iconName"
@@ -40,7 +52,8 @@ export default {
             ],
             telephones:[],
             iconName:"business",
-            namePath:"Служба"
+            namePath:"Служба",
+            search:""
         }
     },
     created(){
@@ -49,6 +62,28 @@ export default {
                 this.telephones = res.data.output
             })
             .catch(err=>console.log(err))
+    },
+    watch:{
+        search:function(query){
+            axios.get('http://c911161l.beget.tech/practic2/structurs/search.api',{
+                params:{
+                    query
+                }
+            })
+            .then(res=>{
+                this.telephones = res.data.output
+            })
+            .catch(err=>console.log(err))
+        }
     }
 }
 </script>
+
+<style>
+.search{
+    margin-top: 10px;
+    width: 100%;
+    max-width: 800px;
+    
+}
+</style>
