@@ -25,6 +25,15 @@
                     placeholder="Отдел"
                     required
                 ></v-text-field>
+                <v-text-field
+                    class="item-list"
+                    ref="address"
+                    v-model="address"
+                    
+                    label="Адресс"
+                    placeholder="ул. Строителей дом 123"
+                    required
+                ></v-text-field>
 
                 <span v-for="(item, index) in telephones" :key="index">
                     <v-divider class="item-list"></v-divider>
@@ -95,6 +104,8 @@
 
 <script>
 import router from '@/router'
+import axios from 'axios'
+
 
 export default {
     name:"AddSubStructur",
@@ -102,16 +113,20 @@ export default {
         return{
             name:null,
             type:null,
+            address:null,
             telephones:[
                 
-            ]
+            ],
+            errorMessages:[],
+            formHasErrors:false
         }
     },
     computed:{
         form(){
             return{
                 name:this.name,
-                type:this.type
+                type:this.type,
+                address:this.address
             
             }
         }
@@ -149,14 +164,63 @@ export default {
 
             this.$refs[f].validate(true)
             })
-
+            
             this.telephones.forEach((item,index)=>{
-                if(this.$refs[`telephones[${index}].number`][0]) this.formHasErrors=true
-                if(this.$refs[`telephones[${index}].type`][0]) this.formHasErrors=true
+                if(!this.$refs[`telephones[${index}].number`][0]) this.formHasErrors=true
+                if(!this.$refs[`telephones[${index}].type`][0]) this.formHasErrors=true
 
                 this.$refs[`telephones[${index}].number`][0].validate(true)
                 this.$refs[`telephones[${index}].type`][0].validate(true)
             })
+
+            if(!this.formHasErrors)
+                axios({
+                    method:"post",
+                    url:"http://c911161l.beget.tech/practic2/substructur.api",
+                    data:{
+                        id_structur:this.$route.params.id,
+                        name:this.name,
+                        type:this.type,
+                        adress:this.address
+                        
+                    },
+                    transformRequest:function(data){
+                        return Object.keys(data)
+                                .map(function(key, index) {
+                                    return `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`
+                                })
+                                .join("&")
+                    }
+                })
+                .then(res=>{
+                    console.log("Succes add substruct:",res.data)
+                    return res.data.output
+                })
+                .then((indata)=>{
+                    this.telephones.forEach((item)=>{
+                        axios({
+                            method:"post",
+                            url:"http://c911161l.beget.tech/practic2/substructur/telephone.api",
+                            data:{
+                                id_substructr:indata.id,
+                                type:item.type,
+                                number:item.number
+                                
+                            },
+                            transformRequest:function(data){
+                                return Object.keys(data)
+                                        .map(function(key, index) {
+                                            return `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`
+                                        })
+                                        .join("&")
+                            }
+                        })
+                        .then(res=>{console.log("Succes add telephone:",res.data)})
+                        .catch(err=>console.log("Error add telephone:",err))
+
+                    })
+                })
+                .catch(err=>console.log("Error add substruct:",err))
         }
     }
 }
