@@ -163,6 +163,7 @@ export default {
                     method:"post",
                     url:"http://c911161l.beget.tech/practic2/telephones.api",
                     data:{
+                        method:"add",
                         id_place:this.place.id,
                         surname:this.surname,
                         name:this.name,

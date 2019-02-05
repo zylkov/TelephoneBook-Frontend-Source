@@ -178,6 +178,7 @@ export default {
                     method:"post",
                     url:"http://c911161l.beget.tech/practic2/substructur.api",
                     data:{
+                        method:"add",
                         id_structur:this.$route.params.id,
                         name:this.name,
                         type:this.type,
@@ -202,6 +203,7 @@ export default {
                             method:"post",
                             url:"http://c911161l.beget.tech/practic2/substructur/telephone.api",
                             data:{
+                                method:"add",
                                 id_substructr:indata.id,
                                 type:item.type,
                                 number:item.number

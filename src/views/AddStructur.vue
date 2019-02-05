@@ -132,7 +132,8 @@ export default {
                     data:{
                         id_place:this.place.id,
                         name:this.name,
-                        adress:this.adress
+                        adress:this.adress,
+                        method:"add"
                     },
                     transformRequest:function(data){
                         return Object.keys(data)
