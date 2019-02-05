@@ -15,7 +15,8 @@
        <Telephones 
        v-bind:telephones="telephones"
        v-bind:iconName="iconName"
-       v-bind:namePath="namePath" />
+       v-bind:namePath="namePath"
+       v-on:deleteTelephone="deleteTelephone" />
    </div> 
 </template>
 
@@ -92,6 +93,30 @@ export default {
                 }) 
             })
             .catch(err=>console.log(err))
+        }
+    },
+    methods:{
+        deleteTelephone(id){
+            axios({
+                    method:"post",
+                    url:"http://c911161l.beget.tech/practic2/telephones.api",
+                    data:{
+                        method:"delete",
+                        id
+                    },
+                    transformRequest:function(data){
+                        return Object.keys(data)
+                                .map(function(key, index) {
+                                    return `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`
+                                })
+                                .join("&")
+                    }
+                })
+                .then(res=>{
+                    console.log("Sucse:",res.data)
+                    this.telephones = this.telephones.filter((item)=>item.id!==id)
+                })
+                .catch(err=>console.log(err))
         }
     }
 }
