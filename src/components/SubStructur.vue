@@ -8,6 +8,9 @@
                 :key="item.id"
                 expand-icon="mdi-menu-down"
                 >
+                <v-btn icon ripple @click="deleteSubstruct(item.id)">
+                    <v-icon color="red lighten-1">delete</v-icon>
+                </v-btn>
                 <div slot="header">{{item.name}}</div>
                 <v-layout align-center justify-center>
                     <v-card class="card" flat>
@@ -30,11 +33,20 @@
                             <v-subheader class="subtitle">
                                 Контакные данные
                             </v-subheader>
-                            <span v-for="(telephone,index) in item.number" :key="index">
+                            <span v-for="(telephone,index) in item.number" :key="index" >
+                                
+                                    
+                                
                                 <v-list-tile-content>
                                     <v-list-tile-title>{{getTypeNumber(telephone)}}</v-list-tile-title>
                                     <v-list-tile-sub-title>{{telephone[getTypeNumber(telephone)]}}</v-list-tile-sub-title>
+                                    
                                 </v-list-tile-content>
+                                <v-list-tile-action>
+                                    <v-btn icon ripple @click="deleteOffTelephone(getTypeNumber(telephone),telephone[getTypeNumber(telephone)],item.id)">
+                                        <v-icon color="red lighten-1">delete</v-icon>
+                                    </v-btn>
+                                </v-list-tile-action>
                             </span>
                         </v-list>
                     </v-card>
@@ -55,6 +67,12 @@ export default {
     methods:{
         getTypeNumber(obj){
            return Object.keys(obj)[0]
+        },
+        deleteSubstruct(id){
+            this.$emit('deleteSubstruct', id);
+        },
+        deleteOffTelephone(type,number,id){
+            this.$emit('deleteOffTelephone', {type,number,id});
         }
     }
 }

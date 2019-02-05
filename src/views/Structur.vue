@@ -1,7 +1,7 @@
 <template>
     <div class="Structur">
         <OfficalTelephone v-bind:telephone="telephone"/>
-        <SubStructur v-bind:substructrs="substructrs"/>
+        <SubStructur v-bind:substructrs="substructrs" v-on:deleteSubstruct="deleteSubstruct" v-on:deleteOffTelephone="deleteOffTelephone"/>
     </div>
 </template>
 
@@ -89,6 +89,64 @@ export default {
                 this.substructrs = res.data.output
             })
             .catch(err=>console.log(err))
+    },
+    methods:{
+        deleteSubstruct(id){
+            axios({
+                    method:"post",
+                    url:"http://c911161l.beget.tech/practic2/substructur.api",
+                    data:{
+                        method:"delete",
+                        id
+                    },
+                    transformRequest:function(data){
+                        return Object.keys(data)
+                                .map(function(key, index) {
+                                    return `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`
+                                })
+                                .join("&")
+                    }
+                })
+                .then(res=>{
+                    console.log("Sucse:",res.data)
+                    this.substructrs = this.substructrs.filter((item)=>item.id!==id)
+                })
+                .catch(err=>console.log(err))
+        },
+        deleteOffTelephone(indata){
+            axios({
+                    method:"post",
+                    url:"http://c911161l.beget.tech/practic2/substructur/telephone.api",
+                    data:{
+                        method:"delete",
+                        number:indata.number,
+                        type:indata.type,
+                        id_substructr:indata.id
+                    },
+                    transformRequest:function(data){
+                        return Object.keys(data)
+                                .map(function(key, index) {
+                                    return `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`
+                                })
+                                .join("&")
+                    }
+                })
+                .then(res=>{
+                    let idx = 0
+                    let data = this.substructrs.find((x,index) =>{
+                        if (x.id===indata.id){
+                            idx = index
+                            return true 
+                            }
+                        })
+                    .number.filter((item,key)=> item !== indata.type && key !== indata.number)
+                    this.substructrs[idx].number=data
+                    console.log("Sucse:",res.data)
+                    
+                })
+                .catch(err=>console.log(err))
+        }
+
     }
 }
 </script>
