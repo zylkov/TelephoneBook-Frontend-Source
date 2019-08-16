@@ -1,6 +1,6 @@
 <template>
     <div class="Abonent">
-        <Telephone v-bind:telephone="telephone"/>
+        <Telephone v-bind:telephone="testtelephone"/>
     </div>
 </template>
 

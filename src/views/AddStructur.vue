@@ -18,7 +18,7 @@
                 <v-select
                     v-model="place"
                     ref="place"
-                    :items="places"
+                    :items="testPlaces"
                     item-text="name"
                     item-value="id"
                     label="Местоположение"

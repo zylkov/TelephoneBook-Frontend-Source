@@ -1,7 +1,7 @@
 <template>
     <div class="Structur">
-        <OfficalTelephone v-bind:telephone="telephone"/>
-        <SubStructur v-bind:substructrs="substructrs" v-on:deleteSubstruct="deleteSubstruct" v-on:deleteOffTelephone="deleteOffTelephone"/>
+        <OfficalTelephone v-bind:telephone="testtelephone"/>
+        <SubStructur v-bind:substructrs="testsubstructrs" v-on:deleteSubstruct="deleteSubstruct" v-on:deleteOffTelephone="deleteOffTelephone"/>
     </div>
 </template>
 

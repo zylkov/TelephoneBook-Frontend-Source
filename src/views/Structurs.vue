@@ -13,7 +13,7 @@
           </div>
        </v-layout>
        <Telephones 
-       v-bind:telephones="telephones"
+       v-bind:telephones="testtelephones"
        v-bind:iconName="iconName"
        v-bind:namePath="namePath" 
        v-on:deleteTelephone="deleteTelephone"/>
