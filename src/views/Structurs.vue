@@ -58,7 +58,7 @@ export default {
         }
     },
     created(){
-        axios.get('http://c911161l.beget.tech/practic2/structurs.api')
+        axios.get('/structurs.api')
             .then(res=>{
                 this.telephones = res.data.output
             })
@@ -66,7 +66,7 @@ export default {
     },
     watch:{
         search:function(query){
-            axios.get('http://c911161l.beget.tech/practic2/structurs/search.api',{
+            axios.get('/structurs/search.api',{
                 params:{
                     query
                 }
@@ -81,7 +81,7 @@ export default {
         deleteTelephone(id){
             axios({
                     method:"post",
-                    url:"http://c911161l.beget.tech/practic2/structurs.api",
+                    url:"/structurs.api",
                     data:{
                         method:"delete",
                         id

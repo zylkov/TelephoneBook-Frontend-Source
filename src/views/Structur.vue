@@ -70,7 +70,7 @@ export default {
         }
     },
     created(){
-        axios.get('http://c911161l.beget.tech/practic2/structur.api',{
+        axios.get('/structur.api',{
             params:{
                 id:this.$route.params.id
             }
@@ -80,7 +80,7 @@ export default {
             })
             .catch(err=>console.log(err))
         
-        axios.get('http://c911161l.beget.tech/practic2/substructurs.api',{
+        axios.get('/substructurs.api',{
             params:{
                 id:this.$route.params.id
             }
@@ -94,7 +94,7 @@ export default {
         deleteSubstruct(id){
             axios({
                     method:"post",
-                    url:"http://c911161l.beget.tech/practic2/substructur.api",
+                    url:"/substructur.api",
                     data:{
                         method:"delete",
                         id
@@ -116,7 +116,7 @@ export default {
         deleteOffTelephone(indata){
             axios({
                     method:"post",
-                    url:"http://c911161l.beget.tech/practic2/substructur/telephone.api",
+                    url:"/substructur/telephone.api",
                     data:{
                         method:"delete",
                         number:indata.number,

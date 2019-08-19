@@ -176,7 +176,7 @@ export default {
             if(!this.formHasErrors)
                 axios({
                     method:"post",
-                    url:"http://c911161l.beget.tech/practic2/substructur.api",
+                    url:"/substructur.api",
                     data:{
                         method:"add",
                         id_structur:this.$route.params.id,
@@ -201,7 +201,7 @@ export default {
                     this.telephones.forEach((item)=>{
                         axios({
                             method:"post",
-                            url:"http://c911161l.beget.tech/practic2/substructur/telephone.api",
+                            url:"/substructur/telephone.api",
                             data:{
                                 method:"add",
                                 id_substructr:indata.id,

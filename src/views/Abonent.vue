@@ -39,7 +39,7 @@ export default {
         }
     },
     created(){
-        axios.get('http://c911161l.beget.tech/practic2/telephone.api',{
+        axios.get('/telephone.api',{
             params:{
                 id:this.$route.params.id
             }

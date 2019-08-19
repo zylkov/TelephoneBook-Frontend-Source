@@ -98,7 +98,7 @@ export default {
         }
     },
     created(){
-        axios.get('http://c911161l.beget.tech/practic2/places.api')
+        axios.get('/places.api')
             .then(res=>{
                 this.places = res.data.output
             })
@@ -128,7 +128,7 @@ export default {
             if(!this.formHasErrors)
                 axios({
                     method:"post",
-                    url:"http://c911161l.beget.tech/practic2/structurs.api",
+                    url:"/structurs.api",
                     data:{
                         id_place:this.place.id,
                         name:this.name,
